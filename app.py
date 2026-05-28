@@ -13,6 +13,10 @@ class Usuario(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     senha_hash = db.Column(db.String(200), nullable=False)
 
+# AQUI ESTÁ A MÁGICA: O comando de criar o banco agora está solto aqui em cima!
+with app.app_context():
+    db.create_all()
+
 @app.route('/')
 def tela_inicial():
     return render_template('login.html')
@@ -62,22 +66,20 @@ def catalogo():
     
     return render_template('catalogo.html')
 
-@app.route('/logout')
-def logout():
-    session.pop('usuario_id', None)
-    flash('Você saiu do sistema com segurança.')
-    return redirect('/')
-
 @app.route('/meus_livros')
 def meus_livros():
-    # Proteção de Rota
     if 'usuario_id' not in session:
         flash('Ei! Você precisa fazer login antes de ver seus livros.')
         return redirect('/')
     
     return render_template('meus_livros.html')
 
+@app.route('/logout')
+def logout():
+    session.pop('usuario_id', None)
+    flash('Você saiu do sistema com segurança.')
+    return redirect('/')
+
+# Veja que o final ficou bem mais limpo agora
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all() 
     app.run(debug=True)
