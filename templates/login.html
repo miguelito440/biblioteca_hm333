@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Universitária</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f7f6; }
+        .card-container { max-width: 450px; margin: 50px auto; }
+    </style>
+</head>
+<body>
+    <div class="container card-container">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-warning alert-dismissible fade show shadow-sm" role="alert">
+                <strong>Aviso:</strong> {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab">Entrar</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="cadastro-tab" data-bs-toggle="tab" data-bs-target="#cadastro" type="button" role="tab">Cadastrar</button>
+          </li>
+        </ul>
+        
+        <div class="tab-content bg-white border border-top-0 p-4 rounded-bottom shadow-sm" id="myTabContent">
+          
+          <div class="tab-pane fade show active" id="login" role="tabpanel">
+            <h4 class="mb-4 text-center">Bem-vindo(a) de volta!</h4>
+            <form action="/login" method="POST">
+              <div class="mb-3">
+                <label for="email_login" class="form-label">E-mail Institucional</label>
+                <input type="email" class="form-control" id="email_login" name="email" required>
+              </div>
+              <div class="mb-3">
+                <label for="senha_login" class="form-label">Senha</label>
+                <div class="input-group">
+                  <input type="password" class="form-control" id="senha_login" name="senha" required>
+                  <button class="btn btn-outline-secondary" type="button" onclick="mostrarSenha('senha_login')">👁️</button>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Entrar</button>
+            </form>
+          </div>
+
+          <div class="tab-pane fade" id="cadastro" role="tabpanel">
+            <h4 class="mb-4 text-center">Nova Conta</h4>
+            <form action="/cadastrar" method="POST">
+              <div class="mb-3">
+                <label for="nome" class="form-label">Nome Completo</label>
+                <input type="text" class="form-control" id="nome" name="nome" required>
+              </div>
+              <div class="mb-3">
+                <label for="email_cad" class="form-label">E-mail</label>
+                <input type="email" class="form-control" id="email_cad" name="email" required>
+              </div>
+              <div class="mb-3">
+                <label for="senha_cad" class="form-label">Senha</label>
+                <div class="input-group">
+                  <input type="password" class="form-control" id="senha_cad" name="senha" minlength="6" required>
+                  <button class="btn btn-outline-secondary" type="button" onclick="mostrarSenha('senha_cad')">👁️</button>
+                </div>
+                <div class="form-text">Sua senha deve ter no mínimo 6 caracteres.</div>
+              </div>
+              <button type="submit" class="btn btn-success w-100">Criar Conta</button>
+            </form>
+          </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function mostrarSenha(idCampo) {
+            var input = document.getElementById(idCampo);
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
+            }
+        }
+    </script>
+</body>
+</html>
