@@ -28,7 +28,7 @@ def cadastrar():
     senha = request.form.get('senha')
 
     if len(senha) < 6:
-        flash('Ops! Sua senha precisa ter pelo menos 6 caracteres.')
+        flash('Com uma senha dessas, até o gato andando no teclado consegue acessar seus livros. Exigimos no mínimo 6 caracteres!')
         return redirect('/')
 
     usuario_existente = Usuario.query.filter_by(email=email).first()
