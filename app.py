@@ -55,7 +55,7 @@ def fazer_login():
         session['usuario_id'] = usuario.id 
         return redirect('/catalogo')
     else:
-        flash('E-mail ou senha incorretos. Tente novamente!')
+        flash('Errou feio, errou rude! O e-mail ou a senha não batem. Tente novamente!')
         return redirect('/')
 
 @app.route('/catalogo')
